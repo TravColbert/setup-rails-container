@@ -1,6 +1,6 @@
 # Monorails
 
-Ruby on Rails in a Docker container.
+Ruby on Rails in an Alpine Linux Docker container.
 
 ## SETUP
 

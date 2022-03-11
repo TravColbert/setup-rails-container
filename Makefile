@@ -19,7 +19,12 @@ build: ## builds and tags app image
 		.
 
 install: build ## installs a new rails app
-	docker run -it --entrypoint "/thh/create_base_app.sh" $(REPO):dev
+	docker run \
+		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
+		-it \
+		--entrypoint "/thh/create_base_app.sh" \
+		$(REPO):dev
 
 create: install ## creates a new container
 	docker create \

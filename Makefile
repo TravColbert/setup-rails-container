@@ -17,13 +17,22 @@ build: ## builds and tags app image
 		-t $(REPO):$(APP_VSN) \
 		.
 
+create: ## creates a new container
+	docker create \
+		-it \
+		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
+		--name $(APP_NAME) \
+		$(REPO):dev \
+		bash
+
 sh: ## starts base image at Bash shell
 	docker run \
-	-it \
-	--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
-	--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
-	--entrypoint bash \
-	$(REPO):dev
+		-it \
+		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
+		--entrypoint bash \
+		$(REPO):dev
 
 start: ## starts the base rails app
 	docker run \

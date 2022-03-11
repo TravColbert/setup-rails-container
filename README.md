@@ -17,8 +17,8 @@ To make your Rails app, start the container and build a default rails app with t
 
 ```
 $ make sh
+# gem install rails
 # rails new ./
-# bundle install
 ```
 
 This will install Rails and set up the default, base application. You may now exit the container.

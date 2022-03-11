@@ -27,3 +27,11 @@ Now you can restart the container but this time we can open up the required netw
 make start
 ```
 
+## DEVELOPMENT
+
+You'll have to remember to reset permissions progressively. You can do this by:
+
+```
+sudo chmod +x ./*
+```
+

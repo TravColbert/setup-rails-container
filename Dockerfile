@@ -23,10 +23,10 @@ RUN gem install rails
 # Copy the main application
 # COPY . .
 
-CMD ["bundle", "exec", "rails", "s"]
+# CMD ["bundle", "exec", "rails", "s"]
 
 # CMD bin/rails server -p $PORT
 
 # CMD pwd && ls -la && which rails && which bash && which irb
 
-# CMD bash &
+CMD bash &

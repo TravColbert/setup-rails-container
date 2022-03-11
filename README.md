@@ -18,6 +18,7 @@ To make your Rails app, start the container and build a default rails app with t
 ```
 $ make sh
 # rails new ./
+# bundle install
 ```
 
 This will install Rails and set up the default, base application. You may now exit the container.
@@ -31,3 +32,6 @@ This will install Rails and set up the default, base application. You may now ex
 Now you can restart the container but this time we can open up the required network ports and fire up the server automatically:
 
 ```
+make start
+```
+

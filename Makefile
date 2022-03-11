@@ -22,6 +22,7 @@ sh: ## starts base image at Bash shell
 	docker run \
 	-it \
 	--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+	--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
 	--entrypoint bash \
 	$(REPO):dev
 
@@ -29,6 +30,7 @@ start: ## starts the base rails app
 	docker run \
 	-it \
 	--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+	--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
 	-p 3000:3000 \
 	$(REPO):dev
 

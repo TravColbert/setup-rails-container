@@ -13,6 +13,7 @@ WORKDIR $INSTALL_PATH
 COPY Gemfile* ./
 COPY create_base_app.sh ./
 
+RUN chmod +x create_base_app.sh
 RUN gem update --system
 RUN gem install bundler
 RUN bundle install

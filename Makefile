@@ -18,15 +18,10 @@ build: ## builds and tags app image
 		-t $(REPO):$(APP_VSN) \
 		.
 
-# sh: ## creates a new container
-# 	docker run \
-# 		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
-# 		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
-# 		-p $(APP_PORT):$(APP_PORT) \
-# 		--entrypoint bash
-# 		$(REPO):dev
+install: build ## installs a new rails app
+	docker run -it --entrypoint "/thh/create_base_app.sh" $(REPO):dev
 
-create: build ## creates a new container
+create: install ## creates a new container
 	docker create \
 		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
 		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
@@ -35,10 +30,7 @@ create: build ## creates a new container
 		$(REPO):dev
 
 start: create ## starts the base rails app
-	docker container start thh_app
-
-install: start ## installs a new rails app
-	docker exec -it thh_app -- bash -c "/thh/create_base_app.sh"
+	docker start $(REPO):dev
 
 up: ## docker-compose up
 	docker-compose up

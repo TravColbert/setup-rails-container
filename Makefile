@@ -12,7 +12,6 @@ help:
 
 build: ## builds and tags app image
 	docker build \
-		--rm \
 		-t $(REPO):latest \
 		-t $(REPO):dev \
 		-t $(REPO):$(APP_VSN) \

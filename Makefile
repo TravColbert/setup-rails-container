@@ -5,6 +5,7 @@ APP_VSN ?= `git rev-parse --short HEAD`
 CURRENT_IMAGE = $(APP_NAME):$(APP_VSN)
 DEV_IMAGE = $(APP_NAME):dev
 REPO=$(APP_NAME)
+APP_PORT = 3000
 
 help:
 	@echo "--------------- $(APP_NAME) ---------------\nImage Tag:\t$(CURRENT_IMAGE)\nDev Image Tag:\t$(DEV_IMAGE)\nDocker Repo:\t$(REPO)\nCommands:"
@@ -17,30 +18,27 @@ build: ## builds and tags app image
 		-t $(REPO):$(APP_VSN) \
 		.
 
-create: ## creates a new container
-	docker create \
-		-it \
-		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
-		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
-		--name $(APP_NAME) \
-		$(REPO):dev \
-		bash
+# sh: ## creates a new container
+# 	docker run \
+# 		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+# 		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
+# 		-p $(APP_PORT):$(APP_PORT) \
+# 		--entrypoint bash
+# 		$(REPO):dev
 
-sh: ## starts base image at Bash shell
-	docker run \
-		-it \
+create: build ## creates a new container
+	docker create \
 		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
 		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
-		--entrypoint bash \
+		--name $(APP_NAME)_app \
+		-p $(APP_PORT):$(APP_PORT) \
 		$(REPO):dev
 
-start: ## starts the base rails app
-	docker run \
-	-it \
-	--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
-	--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
-	-p 3000:3000 \
-	$(REPO):dev
+start: create ## starts the base rails app
+	docker container start thh_app
+
+install: start ## installs a new rails app
+	docker exec -it thh_app -- bash -c "/thh/create_base_app.sh"
 
 up: ## docker-compose up
 	docker-compose up

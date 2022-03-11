@@ -1,4 +1,4 @@
-# Whales
+# Monorails
 
 Ruby on Rails in a Docker container.
 
@@ -10,15 +10,7 @@ To set things up initialize **git** and build the docker image:
 $ git init
 $ git add .
 $ git commit -m "initial commit"
-$ make build
-```
-
-To make your Rails app, start the container and build a default rails app with these commands:
-
-```
-$ make sh
-# gem install rails
-# rails new ./
+$ make create
 ```
 
 This will install Rails and set up the default, base application. You may now exit the container.

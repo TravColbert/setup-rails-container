@@ -34,34 +34,11 @@ create: install ## creates a new container
 		-p $(APP_PORT):$(APP_PORT) \
 		$(REPO):dev
 
-start: create ## starts the base rails app
-	docker start $(REPO):dev
+start: ## starts the base rails app
+	docker start -ai $(REPO)_app
 
-up: ## docker-compose up
-	docker-compose up
+console: ## container to bash
+	docker exec -it $(REPO)_app bash
 
-upd: ## docker-compose up
-	docker-compose up -d
-
-stop: ## docker-compose stop
-	docker-compose stop
-
-down: ## docker-compose down
-	docker-compose down
-
-gen_stack: ## generates stack based on layered compose files
-	docker-compose \
-		-f docker-compose.yml \
-		config > docker-stack.yml
-
-test_rails: ## rails test
-	docker-compose -f docker-compose.yml -f docker-compose-test.yml run web
-
-push_image: ## push current build image to docker repo
-	@echo "Not Implemented"
-
-migrate: ## rails db:migrate
-	docker-compose run web bin/rails db:migrate
-
-c: ## rails c
-	docker-compose run web bin/rails c
+attach: ## connect to running rails container console
+	docker attach $(REPO)_app

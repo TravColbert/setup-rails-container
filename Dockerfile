@@ -21,4 +21,4 @@ RUN yarn install --check-files
 
 WORKDIR $INSTALL_PATH/app
 
-CMD ["bundle", "exec", "rails", "s"]
+CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]

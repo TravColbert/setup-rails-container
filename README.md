@@ -13,11 +13,7 @@ $ git commit -m "initial commit"
 $ make create
 ```
 
-This will install Rails and set up the default, base application. You may now exit the container.
-
-```
-# exit
-```
+This will install Rails and set up the default, base application.
 
 ## STARTUP
 

@@ -23,6 +23,8 @@ Now you can restart the container but this time we can open up the required netw
 make start
 ```
 
+You can point your web browser to: ```localhost:3000``` to see the standard **Ruby on Rails** welcome page. You may now begin development.
+
 ## DEVELOPMENT
 
 You'll have to remember to reset permissions progressively. You can do this by:

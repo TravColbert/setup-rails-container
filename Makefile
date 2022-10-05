@@ -37,8 +37,11 @@ create: install ## creates a new container
 start: ## starts the base rails app
 	docker start -ai $(REPO)_app
 
-console: ## container to bash
+shell: ## container to bash
 	docker exec -it $(REPO)_app bash
+
+console: ## container to bash
+	docker exec -it $(REPO)_app rails c
 
 attach: ## connect to running rails container console
 	docker attach $(REPO)_app

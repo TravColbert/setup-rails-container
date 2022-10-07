@@ -1,6 +1,6 @@
 .PONY: help
 
-APP_NAME = "my_app"
+APP_NAME = my_app
 CURRENT_IMAGE = $(APP_NAME):$(APP_VSN)
 DEV_IMAGE = $(APP_NAME):dev
 APP_VSN ?= `git rev-parse --short HEAD`

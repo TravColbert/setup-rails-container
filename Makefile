@@ -1,10 +1,10 @@
 .PONY: help
 
-APP_NAME = thh
+APP_NAME ?= $(shell bash -c 'read -p "Application home directory: " appfolder; echo $$appfolder')
 APP_VSN ?= `git rev-parse --short HEAD`
 CURRENT_IMAGE = $(APP_NAME):$(APP_VSN)
 DEV_IMAGE = $(APP_NAME):dev
-REPO=$(APP_NAME)
+REPO = $(APP_NAME)
 APP_PORT = 3000
 
 help:
@@ -16,19 +16,20 @@ build: ## builds and tags app image
 		-t $(REPO):latest \
 		-t $(REPO):dev \
 		-t $(REPO):$(APP_VSN) \
+		--build-arg APP_NAME=$(APP_NAME)
 		.
 
 install: build ## installs a new rails app
 	docker run \
-		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+		--mount type=bind,source=$(CURDIR)/app,target=/$(APP_NAME)/app \
 		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
 		-it \
-		--entrypoint "/thh/create_base_app.sh" \
+		--entrypoint "/$(APP_NAME)/create_base_app.sh" \
 		$(REPO):dev
 
 create: install ## creates a new container
 	docker create \
-		--mount type=bind,source=$(CURDIR)/app,target=/thh/app \
+		--mount type=bind,source=$(CURDIR)/app,target=/$(APP_NAME)/app \
 		--mount type=bind,source=$(CURDIR)/bundle,target=/usr/local/bundle \
 		--name $(APP_NAME)_app \
 		-p $(APP_PORT):$(APP_PORT) \

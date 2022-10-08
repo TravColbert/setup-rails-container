@@ -13,7 +13,7 @@ help:
 init: ## sets app name
 	$(shell bash -c 'read -p "Application name: " appname; sed -i "s/my_app/$$appname/g" ./Makefile')
 
-build: init ## builds and tags app image
+build: ## builds and tags app image
 	docker build \
 		-t $(APP_NAME):latest \
 		-t $(APP_NAME):dev \

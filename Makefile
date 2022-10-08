@@ -1,16 +1,21 @@
 .PONY: help
 
-APP_NAME?=my_app
-CURRENT_IMAGE=$(APP_NAME):$(APP_VSN)
-DEV_IMAGE=$(APP_NAME):dev
-APP_VSN?=`git rev-parse --short HEAD`
-APP_PORT?=3000
+APP_NAME ?= my_app
+CURRENT_IMAGE = $(APP_NAME):$(APP_VSN)
+DEV_IMAGE = $(APP_NAME):dev
+APP_VSN ?= `git rev-parse --short HEAD`
+APP_PORT ?= 3000
 
 help:
 	@echo "--------------- $(APP_NAME) ---------------\nImage Tag:\t$(CURRENT_IMAGE)\nDev Image Tag:\t$(DEV_IMAGE)\nDocker Repo:\t$(REPO)\nCommands:"
 	@perl -nle'print $& if m{^[a-zA-Z_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+init: ## usage: make init APP_NAME=[your app name]
+	echo APP_NAME=$(APP_NAME) > ./.env
+	rm -rf .git
+
 build: ## builds and tags app image
+	. ./.env
 	docker build \
 		-t $(APP_NAME):latest \
 		-t $(APP_NAME):dev \

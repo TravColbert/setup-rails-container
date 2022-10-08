@@ -1,10 +1,10 @@
 .PONY: help
 
-APP_NAME = my_app
-CURRENT_IMAGE = $(APP_NAME):$(APP_VSN)
-DEV_IMAGE = $(APP_NAME):dev
-APP_VSN ?= `git rev-parse --short HEAD`
-APP_PORT = 3000
+APP_NAME?=my_app
+CURRENT_IMAGE=$(APP_NAME):$(APP_VSN)
+DEV_IMAGE=$(APP_NAME):dev
+APP_VSN?=`git rev-parse --short HEAD`
+APP_PORT?=3000
 
 help:
 	@echo "--------------- $(APP_NAME) ---------------\nImage Tag:\t$(CURRENT_IMAGE)\nDev Image Tag:\t$(DEV_IMAGE)\nDocker Repo:\t$(REPO)\nCommands:"
@@ -35,17 +35,13 @@ create: install ## creates a new container
 		$(APP_NAME):dev
 
 start: ## starts the base rails app
-	. .app_name
 	docker start -ai $(APP_NAME)_app
 
 shell: ## container to bash
-	. .app_name
 	docker exec -it $(APP_NAME)_app bash
 
 console: ## container to bash
-	. .app_name
 	docker exec -it $(APP_NAME)_app rails c
 
 attach: ## connect to running rails container console
-	. .app_name
 	docker attach $(APP_NAME)_app

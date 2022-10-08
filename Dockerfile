@@ -1,8 +1,10 @@
 FROM ruby:alpine
 
+ARG app_name
+
 RUN apk update && apk add build-base sqlite sqlite-dev tzdata nodejs yarn make gcc bash git
 
-ENV INSTALL_PATH /thh
+ENV INSTALL_PATH /${app_name}
 
 # Create a directory for the app code
 RUN mkdir -p $INSTALL_PATH/app

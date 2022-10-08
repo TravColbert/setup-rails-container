@@ -19,9 +19,6 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore Netsuite DB connection
-# /config/initializer/netsuite_connection.rb
-
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
